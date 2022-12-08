@@ -101,6 +101,8 @@ void loop() {
 
   client.loop();
 
+  checkDate();
+
   if(StartProgram){
       for(int i=0; i<=8; i++) {
       pixels.setPixelColor(i, 150, 0, 0);
@@ -170,7 +172,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     distance[length]= '\0';
      String stringOne = String(distance);// converting a constant char into a String
     pos1 = stringOne.toInt();
-    pos = map(pos1, 50, 70, 5, 150);
+    pos = map(pos1, 2, 20, 5, 150);
     Serial.println(pos);
 
     //while (pos = pos, pos <= 150) {
@@ -281,6 +283,19 @@ ICACHE_RAM_ATTR void detectButton() {
       }
       
   
+}
+
+void checkDate() {
+  // get real date and time
+  waitForSync();
+  //Serial.println("UTC: " + UTC.dateTime());
+  GB.setLocation("Europe/London");
+  String currenttime = GB.dateTime("G");
+  Serial.println("London hour time: " + GB.dateTime("G"));
+  if (currenttime == 0){
+    StartProgram = false;
+  }  
+
 }
 
 void sendMQTTLight() {
