@@ -52,7 +52,7 @@ void setup() {
 void loop() {
   // handler for receiving requests to webserver
   server.handleClient();
-    if (minuteChanged()) {
+    if (secondChanged()) {
     readDistance();
     sendMQTT();
     Serial.println(GB.dateTime("H:i:s")); // UTC.dateTime("l, d-M-y H:i:s.v T")
@@ -119,7 +119,7 @@ void sendMQTT() {
   snprintf (msg, 50, "%.0i", depth);
   Serial.print("Publish message for m: ");
   Serial.println(msg);
-  client.publish("student/CASA0022/ucfnnie/distance", msg);
+  client.publish("student/CASA0022/AnimaLabs/distance", msg);
 
 }
 
@@ -153,7 +153,7 @@ void reconnect() {
     if (client.connect(clientId.c_str(), mqttuser, mqttpass)) {
       Serial.println("connected");
       // ... and resubscribe
-      client.subscribe("student/CASA0022/ucfnnie/distance/inTopic");
+      client.subscribe("student/CASA0022/AnimaLabs/distance");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
