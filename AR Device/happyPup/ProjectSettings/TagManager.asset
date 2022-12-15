@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - noise
+  - LED
   layers:
   - Default
   - TransparentFX

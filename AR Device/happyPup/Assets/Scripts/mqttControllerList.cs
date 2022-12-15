@@ -30,6 +30,11 @@ public class mqttControllerList : MonoBehaviour
     [Space]
     public mqttReceiverList _eventSender;
 
+    public int Health;
+    public Color colorOff = new Color();
+    public Color colorOn = new Color();
+    public Material[] dot_mat;
+
     void Awake()
     {
         if (GameObject.FindGameObjectsWithTag(tagOfTheMQTTReceiver).Length > 0)
@@ -58,8 +63,21 @@ public class mqttControllerList : MonoBehaviour
         if (mqttObject.topic.Contains(topicSubscribed))
         {
             pointerValue = float.Parse(mqttObject.msg);
-
+            //pointerValue = (pointerValue*9)/100;
+            
             Debug.Log("Event Fired. The message, from Object " + nameController + " is = " + pointerValue);
+
+            for (int i = 0; i < dot_mat.Length; i++)
+            {
+                if (i < Health - 1)
+                {
+                    dot_mat[i].color = colorOn;
+                }
+                else
+                {
+                    dot_mat[i].color = colorOff;
+                }
+            }
         }
     }
 
